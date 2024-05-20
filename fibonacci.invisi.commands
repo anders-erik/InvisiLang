@@ -1,0 +1,25 @@
+05, 46 // F
+05, 69 // i
+05, 62 // b
+05, 2E // .
+05, 0A // LF
+05, 30 // 0
+05, 20 // SP
+05, 31 // 1
+05, 20 // SP
+05, 31 // 1
+05, 20 // SP
+
+// Inital var-values
+10, 01 // var-0 = 1
+11, 01 // var-1 = 1
+12, 01 // var-2 = 1
+
+// sequence to loop x 11
+31, 00 // var-0 += var-1
+22, 01 // move value of var-2 to var-1
+20, 02 // move value of var-0 to var-2
+00, 01 // print var-0 as integer
+05, 20 // SP
+
+05, 0A // LF

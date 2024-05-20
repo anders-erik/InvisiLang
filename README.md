@@ -4,5 +4,21 @@ InvisiLang is a small, scripted programming language in which all executed sourc
 
 This project contains both the standard and and implementation written in C, both called InvisiLang. 
 
-The usage of InvisiScript should be limited to invisible-related topics. 
 
+<br>
+
+## Trying it out
+
+1. build
+    - Requires GCC
+```
+$ chmod o+x build.sh
+$ ./build.sh
+```
+
+2. Test the example.
+
+```
+$ chmod o+x ./examples/fibonacci.invisi
+$ ./invisilang ./examples/fibonacci.invisi
+```

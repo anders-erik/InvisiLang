@@ -8,12 +8,14 @@
 - hex values below represent the actual binary/hex data as stored in script file (e.g. E2 = 0xE2 = 0b11100010)
 - each script consists of a 'beginning' and an 'end' symbol. The script content to be executed is located between these two symbols and is organized as follows:
     - **Invisibits** (inx0, inx1) is a group of three real bytes to indicate an invisi-0 or invisi-1. 
-    - **Invisibytes** (INx00-INxFF) make up all data in InvisiLang. Each Invisibyte consist of 8 consecutive invisibits (i.e. 24 real bytes for each Invisibyte).
-    - **Invisicommands** (inC) are made up of two consecutive bytes and is the enabling the programmer to control the behavior of an InvisiLang program. The two Invisibytes making up a command are
-        - Invisido (Actions), and
-        - Invisival (Values)
+    - **Invisibytes** (INx00-INxFF) make up all data in InvisiLang. Each Invisibyte consists of 8 consecutive invisibits (i.e. 24 real bytes for each Invisibyte).
+    - **Invisicommands** (inC) are made up of two consecutive Invisibytes and enables the programmer to control the behavior of an InvisiLang program. The two types of Invisibytes that makes up a command are
+        - Action (Invisido), and
+        - Value  (Invisival)
     
-
+## Runtime
+- flags:
+    - -p : will print the commands in the provided .invisi source file.
 
 ## Script File Encoding
 
@@ -22,31 +24,31 @@
 ```
 E2 8F BF
 ```
-- Start script: bytes 0-2 an eye icon <br>
+- Start script: bytes 0-2 <br>
 - [⏿] (U+23FF)
 
 
 
-### End Script
+### End of Script
 
 ```
 0A
 ```
-- End Script - 1 byte new line
+- End Script - 1 byte represented by the line feed character. 
 - [] (U+000A)
 
 ### Invisi-0
 ```
 E2 80 8B
 ```
-- invisi-0 : represents 'zero' in InvisiLang
+- invisi-0 : represents a '0' in InvisiLang
 - [​] (U+200B)
 
 ### Invisi-1
 ```
 E2 80 8C
 ```
-- invisi-1 : represents 'one' in InvisiLang
+- invisi-1 : represents a '1' in InvisiLang
 - [​] (U+200C)
 
 
@@ -63,28 +65,28 @@ E2 80 8C
 
 ## InvisiScript Commands
 
-- Actions determine what InvisiScripts will do.
+- Commands dictate the behavior of InvisiLang programs.
 - Each command is represented by an action and and a value, both are one Invisibyte in length.
 - Below is a list of all valid InvisiLang Command-Actions
 
 
 
-### Invisido / Actions
+### Actions / Invisido
 
 ---
 
 ***Print***
 Invisibyte | Action name | Notes <br>
 --- | --- | ---
-00  |  print | Print ASCII* value of value at var-0 <br>
-01  |  print | Print ASCII* value of value at var-1 <br>
-02  |  print | Print ASCII* value of value at var-2 <br>
-03  |  print | Print ASCII* value of value at var-3 <br>
-05  |  print | Print ASCII value of provided Invisival to stdout <br>
+00  |  print | Print ASCII* char of value at var-0 to stdout <br>
+01  |  print | Print ASCII* char of value at var-1 to stdout <br>
+02  |  print | Print ASCII* char of value at var-2 to stdout <br>
+03  |  print | Print ASCII* char of value at var-3 to stdout <br>
+05  |  print | Print ASCII char of provided Invisival to stdout <br>
 <s>06  |  <s>read | <s>Read one byte from stdin <br>
  | | 
 
-*Note: print mode chan be changed by setting the value of command value: 0=ASCII, 1=integer, 2=hex. Any other value is equivalent to 0. 
+*Print mode can be changed by using the command-value: 0=ASCII, 1=integer, 2=hex. Any other value is equivalent to 0. 
 
 <br>
 
@@ -126,13 +128,13 @@ Invisibyte | Action name | Notes <br>
 30  |  add | add provided value to var-0 <br>
 31  |  add-r | add var-1 to var-0 <br>
 32  |  subtract | subtract provided value from var-0 <br>
-33  |  subtract-r | subtract var-1from var-0 <br>
+33  |  subtract-r | subtract var-1 from var-0 <br>
 34  |  multiply | multiply var-0 by provided value <br>
 35  |  multiply-r | multiply var-0 by var-1 <br>
-36  |  divide | divide var-0 by provided invisival, rounded to nearest int <br>
-37  |  divide-r | divide var-0 by var-1, rounded to nearest int <br>
-38  |  percent | [ var-0 = 100 * (var-0 / Invisival)], rounded to nearest int <br>
-39  |  percent-r | [ var-0 = 100 * (var-0 / var-1)], rounded to nearest int <br>
+36  |  divide | divide var-0 by provided invisival, rounded to int <br>
+37  |  divide-r | divide var-0 by var-1, rounded to int <br>
+38  |  percent | [ var-0 = 100 * (var-0 / Invisival)], rounded to int <br>
+39  |  percent-r | [ var-0 = 100 * (var-0 / var-1)], rounded to int <br>
  | | 
 
 <br>
@@ -145,7 +147,7 @@ Invisibyte | Action name | Notes <br>
 <br>
 
 
-### Invisival / Values
+### Values / Invisival
 
 - Invisibytes are represented by 8 Invisibits, just like bits that make up a byte on a regular computer, with the leftmost Invisibit being the most significant.
 
